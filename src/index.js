@@ -3,17 +3,10 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 
 class Square extends React.Component {
-  constructor(props){
-    super(props); /*En las clases de javascript siempre se tiene que llamar a super cuando se define un constructor de una subclase. Todos los componentes de React */
-    this.state = { 
-      value: null,
-    }; /* Se inicializa el valor del state en nulo */
-  }
-
   render() {
     return (
-      <button className="square" onClick={() => this.setState({value: 'X'})}>  {/* Se cambia el valor del state a 'X', asi son los comentarios en pedazos de html de React*/}
-        {this.state.value}
+      <button className="square" onClick={() => this.props.onClick()}>
+        {this.props.value}
       </button>
     );
   }
@@ -26,6 +19,13 @@ class Board extends React.Component {
       squares: Array(9).fill(null),
     };
   }
+
+  handleClick(i) {
+    const squares =  this.state.squares.slice(); //copia del arreglo en state.squares
+    squares[i] = 'X';
+    this.setState({squares: squares}); //se asigna esa copia en state
+  }
+
   renderSquare(i) {
     return <Square value={this.state.squares[i]} onClick={()=> this.handleClick(i)}/>;
   }
