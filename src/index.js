@@ -67,14 +67,7 @@ class Game extends React.Component {
     squares[i] = this.state.xIsNext ? 'X' : 'O';
     //se determina la columna y la fila a partir del numero de cuadrado cliqueado
     let col = (i%3)+1;
-    let row;
-    if(i<=2){
-      row = 1;
-    }else if(i <= 5){
-      row = 2;
-    }else if(i <= 8){
-      row = 3;
-    }
+    let row = Math.floor((i/3)+1);
     this.setState({
       history: history.concat([
         {
@@ -105,10 +98,12 @@ class Game extends React.Component {
       const desc = move ?
         'Go to move #' + move + " " + colRow:
         'Go to game start';
-
+      const style = {
+        fontWeight: this.state.stepNumber == move ? 'bold':'normal',
+      }
       return (
         <li key = {move}>
-          <button onClick={() => this.jumpTo(move)}>{desc}</button>
+          <button style={style}onClick={() => this.jumpTo(move)}>{desc}</button>
         </li>
       );
     });
