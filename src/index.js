@@ -111,7 +111,7 @@ class Game extends React.Component {
         'Go to move #' + move + " " + colRow:
         'Go to game start';
       const style = {
-        fontWeight: this.state.stepNumber == move ? 'bold':'normal',
+        fontWeight: this.state.stepNumber === move ? 'bold':'normal',
       }
       return (
         <li key = {move}>
