@@ -54,16 +54,6 @@ class Game extends React.Component {
       ascending: true,
     };
   }
-  changeSquareStyle(i,winner){
-    for(let j = 0; j < winner.length; j++){
-      if(winner[j] == i){
-        return {
-          backgroundColor: 'green',
-        }
-      }
-    }
-
-  }
 
   handleClick(i) {
     const history = this.state.history.slice(0, this.state.stepNumber+1);
@@ -101,6 +91,15 @@ class Game extends React.Component {
     })
   }
 
+  boardFull(current){
+    for(let i = 0; i < current.length; i++){
+      if(current[i] === null){
+        return false;
+      }
+    }
+    return true;
+  }
+
   render() {
     const history = this.state.history;
     const current = history[this.state.stepNumber];
@@ -125,7 +124,12 @@ class Game extends React.Component {
     if (winner) {
       status = "Winner: " + winner.winner;
     } else {
-      status = "Next player: " + (this.state.xIsNext ? "X" : "O");
+      if(!this.boardFull(current.squares)){
+        status = "Next player: " + (this.state.xIsNext ? "X" : "O");
+      }else{
+        status = "Draw";
+      }
+
     }
     let orderButtonText = this.state.ascending? 'Order list in descending order' : 'Order list in ascending order'
     let order = <button onClick = {() => this.orderList(history)}>{orderButtonText}</button>
